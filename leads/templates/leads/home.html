@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Leads Dashboard</h2>
+    <p>All your captured leads in one place.</p>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="label">Total Leads</div>
+        <div class="value">{{ leads|length }}</div>
+    </div>
+</div>
+
+<div class="table-wrapper">
+    <table class="leads-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lead in leads %}
+            <tr>
+                <td>
+                    <div class="lead-name">
+                        <div class="lead-avatar">{{ lead.name|first }}</div>
+                        {{ lead.name }}
+                    </div>
+                </td>
+                <td>
+                    <a href="mailto:{{ lead.email }}" class="email-link">{{ lead.email }}</a>
+                </td>
+                <td>
+                    <span class="message-preview">{{ lead.message }}</span>
+                </td>
+                <td>
+                    <div class="actions">
+                        <form action="{% url 'delete_lead' lead.id %}" method="post"
+                            onsubmit="return confirm('are you confirm delete the lead {{ lead.name }}')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete">delete</button>
+                        </form>
+                        <a href="{% url 'edit_lead' lead.id %}" class="btn-update">update</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">
+                    <div class="empty-state">
+                        <div class="empty-icon">◎</div>
+                        <p>No leads yet.</p>
+                        <a href="/addLead/">Add your first lead →</a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Modifier un Lead</h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div>
+            <label>{{ form.name.label }}</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+
+        <div>
+            <label>{{ form.email.label }}</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+
+        <div>
+            <label>{{ form.message.label }}</label>
+            {{ form.message }}
+            {{ form.message.errors }}
+        </div>
+
+        <button type="submit">
+            Modifier
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lead Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <span class="brand-icon">⬡</span>
+                <span class="brand-text">AI<strong>Lead</strong></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="nav-link {% block nav_home %}{% endblock %}">Dashboard</a></li>
+                <li><a href="/addLead/" class="nav-link {% block nav_add %}{% endblock %}">Add Lead</a></li>
+            </ul>
+            <a href="/addLead/" class="nav-cta">+ New Lead</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>© 2026 AILead Manager</span>
+            <span class="footer-dot">·</span>
+            <span>Powered by intelligence</span>
+        </div>
+    </footer>
+
+</body>
+
+</html>
