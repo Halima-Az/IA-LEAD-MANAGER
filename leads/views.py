@@ -27,6 +27,8 @@ def addLead(request):
                     "id":lead.id,
                     "name": lead.name,
                     "email": lead.email,
+                    "phone":lead.phone,
+                    "company":lead.company,
                     "message": lead.message
                 }, timeout=5)
                 
@@ -77,6 +79,7 @@ def  update_lead_status(request):
         data=json.loads(request.body)
         lead=Lead.objects.get(id=data["id"])
         lead.status=data["status"]
+        lead.score=data["score"]
         lead.save()
         return JsonResponse({"success":True})
         

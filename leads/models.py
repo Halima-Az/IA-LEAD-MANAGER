@@ -6,6 +6,9 @@ class Lead(models.Model):
     email=models.EmailField()
     message=models.TextField()
     status=models.CharField(max_length=20, default="Pending")
+    phone=models.CharField(max_length=10,blank=True)
+    company=models.CharField(max_length=100,blank=True)
+    score=models.IntegerField(default=0)
 
     created_at=models.DateTimeField(auto_now_add=True)
 
