@@ -322,12 +322,15 @@ body {
 }
 
 /* ── Form Card ── */
+.page-header h2, .page-header p{
+      text-align: center;
+}
 .form-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 2.5rem;
-    max-width: 560px;
+    max-width: 800px;
 }
 
 .form-card h2 {
@@ -336,6 +339,7 @@ body {
     font-weight: 800;
     letter-spacing: -0.03em;
     margin-bottom: 0.4rem;
+  
 }
 
 .form-card .subtitle {
