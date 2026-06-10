@@ -25,5 +25,6 @@ urlpatterns = [
     path('edit/<int:id>/',edit_lead,name="edit_lead"),
     path('delete/<int:id>/',delete_lead,name="delete_lead"),
     path('update-lead-status/',update_lead_status,name="update_lead_status"),
-    path('test/',api_leads)
+    #for react
+    path('api/leads/',api_leads,name="api_leads")
 ]
