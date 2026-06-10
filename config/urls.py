@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from leads.views import home,addLead,leads_api,edit_lead,delete_lead,update_lead_status
+from leads.views import home,addLead,leads_api,edit_lead,delete_lead,update_lead_status,api_leads
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home,name='home'),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('api/',leads_api,name='leads_api'),
     path('edit/<int:id>/',edit_lead,name="edit_lead"),
     path('delete/<int:id>/',delete_lead,name="delete_lead"),
-    path('update-lead-status/',update_lead_status,name="update_lead_status")
+    path('update-lead-status/',update_lead_status,name="update_lead_status"),
+    path('test/',api_leads)
 ]

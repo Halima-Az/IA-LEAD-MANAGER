@@ -4,6 +4,12 @@ from .models import Lead
 from .forms import LeadForm
 import requests, json
 from django.views.decorators.csrf import csrf_exempt
+
+#---- --------for react framework-----------------#
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import LeadSerializes
+
 # Create your views here.
 def home(request):
     leads=Lead.objects.all()
@@ -83,4 +89,24 @@ def  update_lead_status(request):
         lead.save()
         return JsonResponse({"success":True})
         
-        
+#---- --------for react framework-----------------#
+
+@api_view(['GET'])
+def api_leads(request):
+    leads= Lead.objects.all()
+    serializer=LeadSerializes(
+        leads,
+        many=True
+    ) 
+    return Response(serializer.data)   
+
+@api_view(['POST'])
+def api_add_lead(request):
+    serializer=LeadSerializes(
+        data=request.data
+    )
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data,status=201)
+    return Response(serializer.errors,status=400)
+             
