@@ -109,4 +109,56 @@ def api_add_lead(request):
         serializer.save()
         return Response(serializer.data,status=201)
     return Response(serializer.errors,status=400)
+
+@api_view(['DELETE'])
+def api_delete_lead(request,id):
+    try:
+        lead=get_object_or_404(Lead,id=id)
+        lead.delete()
+        return Response({"success":True})
+    except Lead.DoesNotExist:
+        return Response({"success":True},status=404)
+    
+@api_view(['GET'])
+def get_lead(request, id):
+
+    try:
+        lead = Lead.objects.get(id=id)
+
+        serializer = LeadSerializes(lead)
+
+        return Response(serializer.data)
+
+    except Lead.DoesNotExist:
+
+        return Response(
+            {"error": "Lead not found"},
+            status=404
+        )
+    
+@api_view(['PATCH'])
+def api_update_lead(request,id):
+    try:
+        lead=Lead.objects.get(id=id) 
+        serializer=LeadSerializes(
+            lead,
+            data=request.data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(
+            serializer.errors,
+            status=400
+        )
+    except Lead.DoesNotExist:
+         return Response(
+            {"error": "Lead not found"},
+            status=404
+        )   
+
+           
+        
+    
              

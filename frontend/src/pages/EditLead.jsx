@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function AddLead() {
+function EditLead() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,36 +14,41 @@ function AddLead() {
     message: "",
   });
 
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api/get-lead/${id}/`)
+      .then((response) => {
+        setFormData(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit= async(e)=>{
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/add-lead/",
-        formData,
-      );
-      alert("Lead ajouté");
-    } catch (error) {
-      console.log(error);
+    try{
+        await axios.patch(`http://127.0.0.1:8000/api/update-lead/${id}/`,formData)
+        alert('lead updated seccessufully :)')
+        navigate("/")
     }
-  };
+    catch (error){
+        console.log(error)
+    }
+    
+  }
 
   return (
     <>
-      <div class="page-header">
-        <h2>Add a Lead</h2>
-        <p>Fill in the details below to register a new lead.</p>
-      </div>
       <div className="container">
         <div class="form-card">
-          <h1>New Lead </h1>
+          <h1>Update lead ({ id })</h1>
           <p class="subtitle">
             Enter contact information and an optional message.
           </p>
@@ -49,6 +58,7 @@ function AddLead() {
                 type="text"
                 name="name"
                 placeholder="Nom"
+                value={formData.name}
                 onChange={handleChange}
               />
             </div>
@@ -57,14 +67,16 @@ function AddLead() {
                 type="email"
                 name="email"
                 placeholder="Email"
+                value={formData.email}
                 onChange={handleChange}
               />
             </div>
-             <div class="form-group">
+            <div class="form-group">
               <input
                 type="number"
                 name="phone"
                 placeholder="phone"
+                value={formData.phone}
                 onChange={handleChange}
               />
             </div>
@@ -73,6 +85,7 @@ function AddLead() {
                 type="text"
                 name="company"
                 placeholder="Entreprise"
+                value={formData.company}
                 onChange={handleChange}
               />
             </div>
@@ -80,12 +93,13 @@ function AddLead() {
               <textarea
                 name="message"
                 placeholder="Message"
+                value={formData.message}
                 onChange={handleChange}
               />
             </div>
 
             <button type="submit" class="btn-submit">
-              Ajouter
+              Update
             </button>
           </form>
         </div>
@@ -94,4 +108,4 @@ function AddLead() {
   );
 }
 
-export default AddLead;
+export default EditLead;

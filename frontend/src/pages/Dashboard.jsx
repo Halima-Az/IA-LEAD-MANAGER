@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const [leads, setLeads] = useState([]);
@@ -14,6 +15,22 @@ function Dashboard() {
         console.log(error);
       });
   }, []);
+const deleteLead = async(id)=>{
+  const confirmDelete=window.confirm("are you sure you want to delete that lead")
+  if(!confirmDelete){return;}
+  try{
+
+    await axios.delete(`http://127.0.0.1:8000/api/delete-lead/${id}/`)
+    setLeads(
+      leads.filter(
+      lead=> lead.id!==id
+    ))
+  }
+  catch (error){
+    console.log(error)
+  }
+}  
+
 
   return (
     <>
@@ -46,7 +63,9 @@ function Dashboard() {
                 <td>
                     <span class="message-preview">{ lead.message }</span>
                 </td>
-                <td>
+                <td class="actions">
+                  <button onClick={()=>deleteLead(lead.id)} class="btn-delete">Delete</button>
+                  <button class="btn-update"><Link to={`/editLead/${lead.id}`}>Update</Link></button>
                     
                 </td>
             </tr>
